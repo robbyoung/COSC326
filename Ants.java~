@@ -9,15 +9,17 @@ public class Ants{
     ArrayList<int[]> states = new ArrayList<int[]>();
     ArrayList<String> inputs = new ArrayList<String>();
     Scanner s = new Scanner(System.in);
-    while(s.hasNext()){
+    int temp = 0;
+    while(temp < 2/*s.hasNext()*/){
       inputs.add(s.nextLine());
+      temp++;
     }
     for(int i = 0; i < inputs.size(); i++){
       Ants.addState(states, inputs.get(i), inputs);
     }
     
     for(int i = 0; i < states.size(); i++){
-      System.out.println(states.get(i));
+      System.out.println(Arrays.toString(states.get(i)));
     }
   }
   
@@ -27,10 +29,10 @@ public class Ants{
     newState[1] = Ants.stateToInt(dna.charAt(7), inputs);
     newState[2] = Ants.stateToInt(dna.charAt(7), inputs);
     newState[3] = Ants.stateToInt(dna.charAt(7), inputs);
-    newState[4] = dna.charAt(2);
-    newState[5] = dna.charAt(3);
-    newState[6] = dna.charAt(4);
-    newState[7] = dna.charAt(5);
+    newState[4] = Ants.convertDirection(dna.charAt(2));
+    newState[5] = Ants.convertDirection(dna.charAt(3));
+    newState[6] = Ants.convertDirection(dna.charAt(4));
+    newState[7] = Ants.convertDirection(dna.charAt(5));
     states.add(newState);
   }
   
