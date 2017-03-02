@@ -5,11 +5,13 @@
 import java.util.*;
 
 /*
- * Simulates creatures related to Langton's ant based on a number of 'dna' inputs.
+ * Simulates creatures related to Langton's ant based on a number of
+ * 'dna' inputs.
  */ 
 public class Ants{
   /*
-   * The main method. Takes inputs from stdin and outputs the ant's position at the end of each scenario.
+   * The main method. Takes inputs from stdin and outputs the ant's position 
+   *   at the end of each scenario.
    */
   public static void main(String[] args){
     Scanner s = new Scanner(System.in);
@@ -36,9 +38,9 @@ public class Ants{
         Ants.addState(states, inputs.get(i), inputs);
       }
       
-      /*for(int i = 0; i < states.size(); i++){
+      for(int i = 0; i < states.size(); i++){
        System.out.println(Arrays.toString(states.get(i)));
-       }*/
+       }
       
       for(int i = 0; i < numSteps; i++){
         int state = getState(antX + "&" + antY, squares);
@@ -50,7 +52,6 @@ public class Ants{
         squares.remove(antX + "&" + antY);
         squares.put(antX + "&" + antY, dna[antDirection]);
         antDirection = dna[antDirection + 4];
-        //System.out.println(Arrays.toString(dna)  + " X: " + antX + " Y: " + antY + " dir: " + antDirection);
         if(antDirection == 0){
           antY++;
         }else if(antDirection == 1){
@@ -71,12 +72,16 @@ public class Ants{
   }
   
   /*
-   * Adds a line of 'dna' to the state array used by the main method using input from stdin.
-   * @param states is an ArrayList of integer arrays representing the dna lines for each state.
+   * Adds a line of 'dna' to the state array used by the main method using 
+   *   input from stdin.
+   * @param states is an ArrayList of integer arrays representing the dna lines
+   *   for each state.
    * @param dna is the current line of input to be put into the states array.
-   * @param inputs is the ArrayList of strings holding the user input for the scenario.
+   * @param inputs is the ArrayList of strings holding the user input for 
+   *   the scenario.
    */
-  public static void addState(ArrayList<int[]> states, String dna, ArrayList<String> inputs){
+  public static void addState(ArrayList<int[]> states, String dna, 
+                              ArrayList<String> inputs){
     int[] newState = new int[8];
     newState[0] = Ants.stateToInt(dna.charAt(7), inputs);
     newState[1] = Ants.stateToInt(dna.charAt(8), inputs);
@@ -90,9 +95,11 @@ public class Ants{
   }
   
   /*
-   * Converts a state character to it's location in the states array used by the main method. 
+   * Converts a state character to it's location in the states array 
+   *   used by the main method. 
    * @param state is a character representing a state.
-   * @param inputs is the ArrayList of strings holding the user input for the scenario.
+   * @param inputs is the ArrayList of strings holding the user input for the 
+   *   scenario.
    * @return int that is the index of the state in the states array.
    */
   public static int stateToInt(char state, ArrayList<String> inputs){
@@ -105,7 +112,8 @@ public class Ants{
   }
   
   /*
-   * Converts directions from a dna character to the integer associated with that direction.
+   * Converts directions from a dna character to the integer associated 
+   *   with that direction.
    * @param nsew is a character representing a direction (N, E, S, or W).
    * @return int holding the integer representation of the direction.
    */
@@ -123,9 +131,11 @@ public class Ants{
   
   /*
    * This gets the state of a specified square from the squares HashMap.
-   * @param key is a string containing the x and y coordinates of the current square, separated by a '&'.
+   * @param key is a string containing the x and y coordinates of the current
+   *   square, separated by a '&'.
    * @param hmap is the hashmap containing all of the squares in the scenario.
-   * @return int is the integer representation of the specified square's state, or -1 if it doesn't have one.
+   * @return int is the integer representation of the specified square's state,
+   *   or -1 if it doesn't have one.
    */ 
   public static int getState(String key, HashMap<String, Integer> hmap){
     if(hmap.containsKey(key)){
