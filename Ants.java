@@ -16,7 +16,7 @@ public class Ants{
   public static void main(String[] args){
     Scanner s = new Scanner(System.in);
     while(s.hasNext()){
-      HashMap<String, Integer> squares = new HashMap<String, Integer>();
+      HashMap<Double, Integer> squares = new HashMap<Double, Integer>();
       ArrayList<int[]> states = new ArrayList<int[]>();
       ArrayList<String> inputs = new ArrayList<String>();
       
@@ -25,10 +25,10 @@ public class Ants{
       int antX = 0, antY = 0, antDirection = 0;
       while(temp != 1){
         String str = s.nextLine();
-        if(str.length() < 11){
+        if(str.length() < 11 && str.charAt(0) != '#'){
           numSteps = Integer.parseInt(str);
           temp = 1;
-        }else{
+        }else if(str.charAt(0) != '#'){
           inputs.add(str);
         }
       }
@@ -40,19 +40,16 @@ public class Ants{
         Ants.addState(states, inputs.get(i), inputs);
       }
       
-      for(int i = 0; i < states.size(); i++){
-       System.out.println(Arrays.toString(states.get(i)));
-       }
-      
       for(int i = 0; i < numSteps; i++){
-        int state = getState(antX + "&" + antY, squares);
+        Double newState = Double.parseDouble(antX + "." + antY);
+        int state = getState(newState, squares);
         if(state == -1){
           state = 0;
           //squares.put(antX + "&" + antY, state);
         }
         int[] dna = states.get(state);
-        squares.remove(antX + "&" + antY);
-        squares.put(antX + "&" + antY, dna[antDirection]);
+        squares.remove(newState);
+        squares.put(newState, dna[antDirection]);
         antDirection = dna[antDirection + 4];
         if(antDirection == 0){
           antY++;
@@ -142,7 +139,7 @@ public class Ants{
    * @return int is the integer representation of the specified square's state,
    *   or -1 if it doesn't have one.
    */ 
-  public static int getState(String key, HashMap<String, Integer> hmap){
+  public static int getState(Double key, HashMap<Double, Integer> hmap){
     if(hmap.containsKey(key)){
       return hmap.get(key);
     }else{
