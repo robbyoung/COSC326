@@ -25,10 +25,10 @@ public class Ants{
       int antX = 0, antY = 0, antDirection = 0;
       while(temp != 1){
         String str = s.nextLine();
-        if(str.length() < 11){
+        if(str.length() < 11 && str.charAt(0) != '#'){
           numSteps = Integer.parseInt(str);
           temp = 1;
-        }else{
+        }else if(str.charAt(0) != '#'){
           inputs.add(str);
         }
       }
@@ -39,10 +39,6 @@ public class Ants{
       for(int i = 0; i < inputs.size(); i++){
         Ants.addState(states, inputs.get(i), inputs);
       }
-      
-      for(int i = 0; i < states.size(); i++){
-       System.out.println(Arrays.toString(states.get(i)));
-       }
       
       for(int i = 0; i < numSteps; i++){
         int state = getState(antX + "&" + antY, squares);
@@ -68,7 +64,6 @@ public class Ants{
       for(int i = 0; i < inputs.size(); i++){
         System.out.println(inputs.get(i));
       }
-      System.out.println();
       System.out.println("# " + antX + " " + antY);
       if(s.hasNext()){
         System.out.println();
