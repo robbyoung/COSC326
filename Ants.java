@@ -21,12 +21,12 @@ public class Ants{
       ArrayList<String> inputs = new ArrayList<String>();
       
       int temp = 0;
-      int numSteps = 0;
+      long numSteps = 0;
       int antX = 0, antY = 0, antDirection = 0;
       while(temp != 1){
         String str = s.nextLine();
         if(str.length() < 11 && str.charAt(0) != '#'){
-          numSteps = Integer.parseInt(str);
+          numSteps = Long.parseLong(str);
           temp = 1;
         }else if(str.charAt(0) != '#'){
           inputs.add(str);
@@ -40,7 +40,7 @@ public class Ants{
         Ants.addState(states, inputs.get(i), inputs);
       }
       
-      for(int i = 0; i < numSteps; i++){
+      for(long i = 0; i < numSteps; i++){
         int state = getState(antX + "&" + antY, squares);
         if(state == -1){
           state = 0;
