@@ -32,7 +32,9 @@ public class Ants{
           inputs.add(str);
         }
       }
-      s.nextLine();
+      if(s.hasNext()){
+        s.nextLine();
+      }
       
       for(int i = 0; i < inputs.size(); i++){
         Ants.addState(states, inputs.get(i), inputs);
@@ -68,6 +70,9 @@ public class Ants{
       }
       System.out.println();
       System.out.println("# " + antX + " " + antY);
+      if(s.hasNext()){
+        System.out.println();
+      }
     }
   }
   
