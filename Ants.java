@@ -22,7 +22,8 @@ public class Ants{
       
       int temp = 0;
       long numSteps = 0;
-      int antX = 0, antY = 0, antDirection = 0;
+      long antX = 0, antY = 0;
+      int antDirection = 0;
       while(temp != 1){
         String str = s.nextLine();
         if(str.length() < 11 && str.charAt(0) != '#'){
