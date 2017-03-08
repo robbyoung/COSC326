@@ -48,8 +48,11 @@ public class Ants{
           //squares.put(antX + "&" + antY, state);
         }
         int[] dna = states.get(state);
-        squares.remove(antX + "&" + antY);
-        squares.put(antX + "&" + antY, dna[antDirection]);
+        if(dna[antDirection] == 0){
+          squares.remove(antX + "&" + antY);
+        }else{
+          squares.put(antX + "&" + antY, dna[antDirection]);
+        }
         antDirection = dna[antDirection + 4];
         if(antDirection == 0){
           antY++;
