@@ -16,7 +16,7 @@ public class Ants{
   public static void main(String[] args){
     Scanner s = new Scanner(System.in);
     while(s.hasNext()){
-      HashMap<String, Integer> squares = new HashMap<String, Integer>();
+      HashMap<Long, Integer> squares = new HashMap<Long, Integer>();
       ArrayList<int[]> states = new ArrayList<int[]>();
       ArrayList<String> inputs = new ArrayList<String>();
       
@@ -33,36 +33,35 @@ public class Ants{
           inputs.add(str);
         }
       }
-      if(s.hasNext()){
+      /*if(s.hasNext()){
         s.nextLine();
-      }
-      
+      }*/
       for(int i = 0; i < inputs.size(); i++){
         Ants.addState(states, inputs.get(i), inputs);
       }
       
       for(long i = 0; i < numSteps; i++){
-        int state = getState(antX + "&" + antY, squares);
+        int state = getState(cantor(antX, antY), squares);
         if(state == -1){
           state = 0;
-          //squares.put(antX + "&" + antY, state);
         }
         int[] dna = states.get(state);
         if(dna[antDirection] == 0){
-          squares.remove(antX + "&" + antY);
+          squares.remove(cantor(antX, antY));
         }else{
-          squares.put(antX + "&" + antY, dna[antDirection]);
+          squares.put(cantor(antX, antY), dna[antDirection]);
         }
         antDirection = dna[antDirection + 4];
         if(antDirection == 0){
           antY++;
         }else if(antDirection == 1){
-          antX--;
+          antX++;
         }else if(antDirection == 2){
           antY--;
         }else if(antDirection == 3){
-          antX++;
+          antX--;
         }
+        //System.out.println("# " + antX + " " + antY);
       }
       
       for(int i = 0; i < inputs.size(); i++){
@@ -141,11 +140,32 @@ public class Ants{
    * @return int is the integer representation of the specified square's state,
    *   or -1 if it doesn't have one.
    */ 
-  public static int getState(String key, HashMap<String, Integer> hmap){
+  public static int getState(long key, HashMap<Long, Integer> hmap){
     if(hmap.containsKey(key)){
       return hmap.get(key);
     }else{
       return -1;
     }
+  }
+  
+  /*
+   * This derives a unique value from a coordinate pair using Cantor's pairing.
+   * @param a is the x value of the coordinate pair.
+   * @param b is the y value of the coordinate pair.
+   * @return a long holding a unique value derived from the coordinates.
+   */
+  public static long cantor(long a, long b){
+    if(a >= 0){
+      a = a * 2;
+    }else{
+      a = -a * 2 - 1;
+    }
+    if(b >= 0){
+      b = b * 2;
+    }else{
+      b = -b * 2 - 1;
+    }
+    long c = Math.round((a + b)*(a + b + 1)/2.0 + b);
+    return c;
   }
 }

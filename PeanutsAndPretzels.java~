@@ -1,0 +1,11 @@
+import java.util.*;
+
+public class PeanutsAndPretzels{
+  public static void main(String[] args){
+    Scanner s = new Scanner(System.in);
+    ArrayList<int[]> combos = new ArrayList<int[]>();
+    int peanuts, pretzels;
+    
+    
+  }
+}
