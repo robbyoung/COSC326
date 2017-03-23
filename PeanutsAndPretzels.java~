@@ -25,6 +25,7 @@ public class PeanutsAndPretzels{
         //System.out.println("Item " + i + ": " + Arrays.toString(combos.get(i)));
       }
       for(int i = 0; i < combos.size(); i++){
+        System.out.println("Testing " + combos.get(i)[0] + " " + combos.get(i)[1]);
         if(takeTurn(peanuts - combos.get(i)[0], pretzels - combos.get(i)[1], combos, false)){
           System.out.println(combos.get(i)[0] + " " + combos.get(i)[1]);
           break;

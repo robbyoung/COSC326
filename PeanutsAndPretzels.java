@@ -21,11 +21,12 @@ public class PeanutsAndPretzels{
       }
       combos.add(new int[]{1, 0});
       combos.add(new int[]{0, 1});
+      /*for(int i = 0; i < combos.size(); i++){
+        System.out.println("Item " + i + ": " + Arrays.toString(combos.get(i)));
+      }*/
+      System.out.println("" + combos.size() + " combos.");
       for(int i = 0; i < combos.size(); i++){
-        //System.out.println("Item " + i + ": " + Arrays.toString(combos.get(i)));
-      }
-      for(int i = 0; i < combos.size(); i++){
-        System.out.println("Testing " + combos.get(i)[0] + " " + combos.get(i)[1]);
+        //System.out.println("Testing " + combos.get(i)[0] + " " + combos.get(i)[1]);
         if(takeTurn(peanuts - combos.get(i)[0], pretzels - combos.get(i)[1], combos, false)){
           System.out.println(combos.get(i)[0] + " " + combos.get(i)[1]);
           break;
@@ -64,7 +65,15 @@ public class PeanutsAndPretzels{
       //System.out.println("Peanuts: " + Arrays.toString(min) + " , Pretzels: " + Arrays.toString(max));
       for(int i = min[0]; i <= max[0]; i++){
         for(int j = min[1]; j <= max[1]; j++){
-          combos.add(new int[]{i, j});
+          for(int k = 0; k <= combos.size(); k++){
+            if(k == combos.size()){
+              combos.add(new int[]{i, j});
+              break;
+            }else if(combos.get(k)[0] + combos.get(k)[1] < i + j){
+              combos.add(k, new int[]{i, j});
+              break;
+            }
+          }
         }
       }
     }
