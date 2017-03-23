@@ -3,15 +3,17 @@ import java.util.*;
 public class PeanutsAndPretzels{
   public static void main(String[] args){
     Scanner s = new Scanner(System.in);
+    HashMap<Long, Boolean> states;
     ArrayList<int[]> combos;
     int peanuts, pretzels;
     while(s.hasNext()){
       combos = new ArrayList<int[]>();
+      states = new HashMap<Long, Boolean>();
       String[] bowlCount = s.nextLine().split("\\s+");
       peanuts = Integer.parseInt(bowlCount[0]);
       pretzels = Integer.parseInt(bowlCount[1]);
       boolean doNext = true;
-      while(doNext){
+      while(doNext && s.hasNext()){
         String newRule = s.nextLine();
         if(!newRule.equals("")){
           splitCombo(combos, newRule, peanuts, pretzels);
@@ -27,7 +29,7 @@ public class PeanutsAndPretzels{
       System.out.println("" + combos.size() + " combos.");
       for(int i = 0; i < combos.size(); i++){
         //System.out.println("Testing " + combos.get(i)[0] + " " + combos.get(i)[1]);
-        if(takeTurn(peanuts - combos.get(i)[0], pretzels - combos.get(i)[1], combos, false)){
+        if(takeTurn(peanuts - combos.get(i)[0], pretzels - combos.get(i)[1], combos, false, states)){
           System.out.println(combos.get(i)[0] + " " + combos.get(i)[1]);
           break;
         }
@@ -79,8 +81,12 @@ public class PeanutsAndPretzels{
     }
   }
   
-  public static boolean takeTurn(int peanuts, int pretzels, ArrayList<int[]> combos, boolean myTurn){
+  public static boolean takeTurn(int peanuts, int pretzels, ArrayList<int[]> combos, boolean myTurn, HashMap<Long, Boolean> states){
     //System.out.println(peanuts + " and " + pretzels + ", choices:");
+    long key = (((long)peanuts) << 32) + pretzels;
+    if(myTurn && states.containsKey(key)){
+      return states.get(key);
+    }
     if(peanuts < 0 && pretzels < 0){
       return false;
     }
@@ -90,10 +96,16 @@ public class PeanutsAndPretzels{
     for(int i = 0; i < combos.size(); i++){
       //System.out.println(combos.get(i)[0] + " and " + combos.get(i)[1]);
       if(peanuts >= combos.get(i)[0] && pretzels >= combos.get(i)[1]){
-        if(!takeTurn(peanuts-combos.get(i)[0], pretzels-combos.get(i)[1], combos, !myTurn)){
+        if(!takeTurn(peanuts-combos.get(i)[0], pretzels-combos.get(i)[1], combos, !myTurn, states)){
+          if(myTurn){
+            states.put(key, false);
+          }
           return false;
         }
       }
+    }
+    if(myTurn){
+      states.put(key, true);
     }
     return true;
   }
