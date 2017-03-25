@@ -57,52 +57,58 @@ public class PeanutsAndPretzels{
    * Convert a combination of the form =x, >x, or <x into a sequence of int
    *  arrays that can be understood by the program.
    * @param combos is an ArrayList storing all of the available combinations.
-   * @param c is the player input to be stored in the combos ArrayList.
+   * @param c is the user input to be stored in the combos ArrayList.
    * @param peanuts is the number of peanuts at the start of the scenario.
    * @param pretzels is the number of pretzels at the start of the scenario.
    */
   public static void splitCombo(ArrayList<int[]> combos, String c, int peanuts, int pretzels){
     String[] ruleStrings = c.split("\\s+");
-    /*if(ruleStrings[0].charAt(0) == '=' && ruleStrings[1].charAt(0) == '='){
-      int[] newCombo = new int[2];
-      newCombo[0] = Integer.parseInt(ruleStrings[0].substring(1));
-      newCombo[1] = Integer.parseInt(ruleStrings[1].substring(1));
-      combos.add(newCombo);
-    }else{*/
-      int[] pAndP = new int[]{ peanuts, pretzels };
-      int[] max = new int[2];
-      int[] min = new int[2];
-      for(int i = 0; i < 2; i++){
-        if(ruleStrings[i].charAt(0) == '<'){
-          max[i] = Integer.parseInt(ruleStrings[i].substring(1))-1;
-          min[i] = 1;
-        }else if(ruleStrings[i].charAt(0) == '>'){
-          max[i] = pAndP[i];
-          min[i] = Integer.parseInt(ruleStrings[i].substring(1))+1;
-        }else{
-          max[i] = Integer.parseInt(ruleStrings[i].substring(1));
-          min[i] = max[i];
-        }
+    int[] pAndP = new int[]{ peanuts, pretzels };
+    int[] max = new int[2];
+    int[] min = new int[2];
+    for(int i = 0; i < 2; i++){
+      if(ruleStrings[i].charAt(0) == '<'){
+        max[i] = Integer.parseInt(ruleStrings[i].substring(1))-1;
+        min[i] = 1;
+      }else if(ruleStrings[i].charAt(0) == '>'){
+        max[i] = pAndP[i];
+        min[i] = Integer.parseInt(ruleStrings[i].substring(1))+1;
+      }else{
+        max[i] = Integer.parseInt(ruleStrings[i].substring(1));
+        min[i] = max[i];
       }
-      for(int i = min[0]; i <= max[0]; i++){
-        for(int j = min[1]; j <= max[1]; j++){
-          combos.add(new int[]{i, j});
-        }
+    }
+    //Add all combinations derived from the max and min of the input.
+    for(int i = min[0]; i <= max[0]; i++){
+      for(int j = min[1]; j <= max[1]; j++){
+        combos.add(new int[]{i, j});
       }
-    //}
+    }
   }
   
+  /*
+   * Simulates a player's turn taking peanuts or pretzels from the bowls.
+   * @param peanuts is the number of peanuts at this point in the game.
+   * @param pretzels is the number of pretzels at this point in the game.
+   * @param combos is the array of combinations available to the player.
+   * @param myTurn represents whether or not it is the player's turn.
+   * @param states is a HashMap holding all previously visited states/outcomes.
+   * @return a boolean determining whether or not the player is guaranteed to 
+   *   win from this point in the game.
+   */
   public static boolean takeTurn(int peanuts, int pretzels, ArrayList<int[]> combos, boolean myTurn, HashMap<Long, Boolean> states){
     long key = (((long)peanuts) << 32) + pretzels;
+    //Check if this state has been previously visited.
     if(myTurn && states.containsKey(key)){
       return states.get(key);
     }
-    if(peanuts < 0 && pretzels < 0){
+    if(peanuts < 0 || pretzels < 0){
       return false;
     }
     if(peanuts == 0 && pretzels == 0){
       return !myTurn;
     }
+    //Cycle through all of the possible combos to see if a win is guaranteed.
     for(int i = 0; i < combos.size(); i++){
       if(peanuts >= combos.get(i)[0] && pretzels >= combos.get(i)[1]){
         if(!takeTurn(peanuts-combos.get(i)[0], pretzels-combos.get(i)[1], combos, !myTurn, states)){
@@ -113,6 +119,7 @@ public class PeanutsAndPretzels{
         }
       }
     }
+    //Save the outcome of this game state.
     if(myTurn){
       states.put(key, true);
     }
