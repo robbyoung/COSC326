@@ -37,8 +37,10 @@ public class ColouringMaps{
       }else{
         System.out.println("NO SOLUTION");
       }
+      if(s.hasNext()){
+        System.out.println();
+      }
     }
-    System.out.println();
   }
   
   /*
