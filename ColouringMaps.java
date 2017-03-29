@@ -28,10 +28,10 @@ public class ColouringMaps{
       
       if(tryColour(0, regions)){
         for(int i = 0; i < regions.size(); i++){
-          System.out.println(regions.get(i).toString());
+          System.out.println("Region " + i + ": " + regions.get(i).get(0));
         }
       }else{
-        System.out.print("NO SOLUTION");
+        System.out.println("NO SOLUTION");
       }
     }
   }
@@ -43,7 +43,7 @@ public class ColouringMaps{
     for(int c = 0; c < 4; c++){
       boolean clashes = false;
       for(int i = 1; i < regions.get(index).size(); i++){
-        if(regions.get(index).get(i) == c){
+        if(regions.get(regions.get(index).get(i)).get(0) == c){
           clashes = true;
         }
       }
