@@ -1,0 +1,12 @@
+import java.util.*;
+import java.awt.*;
+
+public class AccessPoints{
+  public static void main(String[] args){
+    ArrayList<Point> = new ArrayList<Point>();
+    Scanner s = new Scanner(System.in);
+    
+  }
+  
+  
+}
